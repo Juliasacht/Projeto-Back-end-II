@@ -1,0 +1,37 @@
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center">
+    <h2>Lista de Médicos</h2>
+    <a href="/medicos/novo" class="btn">Novo</a>
+  </div>
+  <form method="get" action="/medicos" style="margin:12px 0">
+    <input type="text" name="q" value="<%= q %>" placeholder="Buscar por nome, CRM ou especialidade"/>
+    <button class="btn outline" type="submit">Buscar</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CRM</th>
+        <th>Especialidade</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Disponibilidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!medicos.length) { %>
+        <tr><td colspan="6">Nenhum médico cadastrado.</td></tr>
+      <% } %>
+      <% medicos.forEach(m => { %>
+        <tr>
+          <td><%= m.nome %></td>
+          <td><%= m.crm %></td>
+          <td><%= m.especialidade %></td>
+          <td><%= m.telefone || '-' %></td>
+          <td><%= m.email || '-' %></td>
+          <td><%= m.disponibilidade || '-' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
