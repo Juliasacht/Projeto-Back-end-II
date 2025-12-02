@@ -1,0 +1,68 @@
+<div class="card">
+  <h2><%= editing ? 'Editar Consulta' : 'Agendar Consulta' %></h2>
+
+  <% if (errors.geral) { %>
+    <p class="error"><%= errors.geral %></p>
+  <% } %>
+
+  <form method="post" class="form">
+    <div class="form-group">
+      <label>Data*</label>
+      <input type="date" name="data" value="<%= form.data ? form.data.toString().substring(0,10) : '' %>" />
+      <% if (errors.data) { %><span class="error"><%= errors.data %></span><% } %>
+    </div>
+
+    <div class="form-group">
+      <label>Horário*</label>
+      <input type="time" name="horario" value="<%= form.horario || '' %>" />
+      <% if (errors.horario) { %><span class="error"><%= errors.horario %></span><% } %>
+    </div>
+
+    <div class="form-group">
+  <label>Status</label>
+  <select name="status">
+    <% const statusOptions = ['Agendada', 'Confirmada', 'Realizada', 'Cancelada', 'Não Compareceu']; %>
+
+    <% statusOptions.forEach(s => { %>
+      <option value="<%= s %>" <%= form.status === s ? 'selected' : '' %> >
+        <%= s %>
+      </option>
+    <% }) %>
+  </select>
+</div>
+
+    <div class="form-group">
+      <label>Paciente*</label>
+      <select name="idPaciente">
+        <option value="">Selecione</option>
+        <% pacientes.forEach(p => { %>
+          <option value="<%= p.idPaciente %>" <%= String(form.idPaciente) === String(p.idPaciente) ? 'selected' : '' %>>
+            <%= p.nome %>
+          </option>
+        <% }) %>
+      </select>
+      <% if (errors.idPaciente) { %><span class="error"><%= errors.idPaciente %></span><% } %>
+    </div>
+
+    <div class="form-group">
+      <label>Médico*</label>
+      <select name="idMedico">
+        <option value="">Selecione</option>
+        <% medicos.forEach(m => { %>
+          <option value="<%= m.idMedico %>" <%= String(form.idMedico) === String(m.idMedico) ? 'selected' : '' %>>
+            <%= m.nome %> - <%= m.especialidade %>
+          </option>
+        <% }) %>
+      </select>
+      <% if (errors.idMedico) { %><span class="error"><%= errors.idMedico %></span><% } %>
+    </div>
+
+    <div class="form-group">
+      <label>Observações</label>
+      <textarea name="observacoes"><%= form.observacoes || '' %></textarea>
+    </div>
+
+    <button class="btn" type="submit"><%= editing ? 'Salvar alterações' : 'Agendar' %></button>
+    <a href="/consultas" class="btn outline">Cancelar</a>
+  </form>
+</div>

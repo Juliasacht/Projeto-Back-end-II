@@ -1,0 +1,51 @@
+<div class="card dashboard-admin">
+  <div class="dashboard-header">
+    <div>
+      <h2>Dashboard Admin</h2>
+      <p class="subtitle">
+        Bem-vindo, <strong><%= admin.nome %></strong>
+      </p>
+    </div>
+    <div class="badge-role">
+      Admin
+    </div>
+  </div>
+
+  <div class="admin-stats">
+    <div class="admin-stat-card">
+      <div class="admin-stat-label">Pacientes cadastrados</div>
+      <div class="admin-stat-value"><%= stats.totalPacientes %></div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="admin-stat-label">Médicos cadastrados</div>
+      <div class="admin-stat-value"><%= stats.totalMedicos %></div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="admin-stat-label">Consultas de hoje</div>
+      <div class="admin-stat-value"><%= stats.consultasHoje %></div>
+    </div>
+  </div>
+
+  <div class="admin-links">
+    <a href="/pacientes" class="admin-card">
+      <div class="admin-card-icon">👤</div>
+      <h3>Pacientes</h3>
+      <p>Visualizar, cadastrar e editar pacientes.</p>
+      <span class="admin-card-link">Ir para pacientes →</span>
+    </a>
+
+    <a href="/medicos" class="admin-card">
+      <div class="admin-card-icon">🩺</div>
+      <h3>Médicos</h3>
+      <p>Gerenciar médicos, especialidades e contatos.</p>
+      <span class="admin-card-link">Ir para médicos →</span>
+    </a>
+
+    <a href="/consultas" class="admin-card">
+      <div class="admin-card-icon">📅</div>
+      <h3>Agenda</h3>
+      <p>Acompanhar, agendar e atualizar consultas.</p>
+      <span class="admin-card-link">Ir para agenda →</span>
+    </a>
+  </div>
+</div>

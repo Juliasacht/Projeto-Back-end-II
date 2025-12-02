@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Pacientes</h2>
+    <a href="/pacientes/novo" class="btn">Novo Paciente</a>
+  </div>
+
+  <form method="get" action="/pacientes" class="search-form">
+    <input type="text" name="q" value="<%= q %>" placeholder="Buscar por nome, CPF ou email" />
+    <button class="btn outline" type="submit">Buscar</button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!pacientes || pacientes.length === 0) { %>
+        <tr>
+          <td colspan="5">Nenhum paciente cadastrado.</td>
+        </tr>
+      <% } else { %>
+        <% pacientes.forEach(p => { %>
+          <tr>
+            <td data-label="Nome"><%= p.nome %></td>
+            <td data-label="CPF"><%= p.cpf || '-' %></td>
+            <td data-label="Telefone"><%= p.telefone || '-' %></td>
+            <td data-label="Email"><%= p.email || '-' %></td>
+            <td class="actions" data-label="Ações">
+              <a href="/pacientes/editar/<%= p.idPaciente %>">Editar</a>
+              &nbsp;·&nbsp;
+              <a href="/pacientes/excluir/<%= p.idPaciente %>" onclick="return confirm('Excluir paciente?')">Excluir</a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>

@@ -1,13 +1,15 @@
 <div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center">
-    <h2>Lista de Médicos</h2>
-    <a href="/medicos/novo" class="btn">Novo</a>
+  <div class="card-header">
+    <h2>Médicos</h2>
+    <a href="/medicos/novo" class="btn">Novo Médico</a>
   </div>
-  <form method="get" action="/medicos" style="margin:12px 0">
-    <input type="text" name="q" value="<%= q %>" placeholder="Buscar por nome, CRM ou especialidade"/>
+
+  <form method="get" action="/medicos" class="search-form">
+    <input type="text" name="q" value="<%= q %>" placeholder="Buscar por nome, CRM ou especialidade" />
     <button class="btn outline" type="submit">Buscar</button>
   </form>
-  <table>
+
+  <table class="table">
     <thead>
       <tr>
         <th>Nome</th>
@@ -16,22 +18,31 @@
         <th>Telefone</th>
         <th>Email</th>
         <th>Disponibilidade</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <% if (!medicos.length) { %>
-        <tr><td colspan="6">Nenhum médico cadastrado.</td></tr>
-      <% } %>
-      <% medicos.forEach(m => { %>
+      <% if (!medicos || medicos.length === 0) { %>
         <tr>
-          <td><%= m.nome %></td>
-          <td><%= m.crm %></td>
-          <td><%= m.especialidade %></td>
-          <td><%= m.telefone || '-' %></td>
-          <td><%= m.email || '-' %></td>
-          <td><%= m.disponibilidade || '-' %></td>
+          <td colspan="7">Nenhum médico cadastrado.</td>
         </tr>
-      <% }) %>
+      <% } else { %>
+        <% medicos.forEach(m => { %>
+          <tr>
+            <td data-label="Nome"><%= m.nome %></td>
+            <td data-label="CRM"><%= m.crm %></td>
+            <td data-label="Especialidade"><%= m.especialidade || '-' %></td>
+            <td data-label="Telefone"><%= m.telefone || '-' %></td>
+            <td data-label="Email"><%= m.email || '-' %></td>
+            <td data-label="Disponibilidade"><%= m.disponibilidade || '-' %></td>
+            <td class="actions" data-label="Ações">
+              <a href="/medicos/editar/<%= m.idMedico %>">Editar</a>
+              &nbsp;·&nbsp;
+              <a href="/medicos/excluir/<%= m.idMedico %>" onclick="return confirm('Excluir médico?')">Excluir</a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
     </tbody>
   </table>
 </div>

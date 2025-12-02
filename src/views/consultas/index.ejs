@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Consultas</h2>
+    <a href="/consultas/novo" class="btn">Nova Consulta</a>
+  </div>
+
+  <form method="get" action="/consultas" class="search-form">
+    <input
+      type="text"
+      name="q"
+      value="<%= q %>"
+      placeholder="Buscar por paciente, médico, data ou status" />
+    <button class="btn outline" type="submit">Buscar</button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Horário</th>
+        <th>Paciente</th>
+        <th>Médico</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!consultas || consultas.length === 0) { %>
+        <tr>
+          <td colspan="6">Nenhuma consulta cadastrada.</td>
+        </tr>
+      <% } else { %>
+        <% consultas.forEach(c => { %>
+          <tr>
+            <td data-label="Data"><%= c.dataFormatada %></td>
+            <td data-label="Horário"><%= c.horario %></td>
+            <td data-label="Paciente"><%= c.pacienteNome %></td>
+            <td data-label="Médico"><%= c.medicoNome %></td>
+            <td data-label="Status">
+              <span class="badge <%= c.statusSlug %>"><%= c.status %></span>
+            </td>
+            <td class="actions" data-label="Ações">
+              <a href="/consultas/editar/<%= c.idConsulta %>">Editar</a>
+              &nbsp;·&nbsp;
+              <a href="/consultas/excluir/<%= c.idConsulta %>" onclick="return confirm('Excluir consulta?')">Excluir</a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>

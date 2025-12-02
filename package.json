@@ -1,18 +1,21 @@
 {
-  "name": "clinic-mvc",
+  "name": "clinica-medicos-sql",
   "version": "1.0.0",
-  "private": true,
   "type": "module",
+  "main": "app.js",
   "scripts": {
-    "dev": "node src/app.js",
-    "start": "node src/app.js",
-    "db:seed": "node scripts/seed.js"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.0.0",
     "ejs": "^3.1.10",
-    "express": "^4.19.2",
+    "express": "^4.19.0",
     "express-ejs-layouts": "^2.5.1",
-    "mysql2": "^3.11.3"
+    "mysql2": "^3.9.0",
+    "express-session": "^1.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
