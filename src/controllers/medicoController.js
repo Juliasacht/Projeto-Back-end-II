@@ -3,58 +3,70 @@ import {
   listMedicos,
   getMedicoById,
   updateMedico,
-  deleteMedico
+  deleteMedico,
 } from '../models/medicoModel.js';
 
-export async function getList(req, res) {
-  try {
-    const medicos = await listMedicos({ search: req.query.q });
-    res.render('medicos/index', {
-      title: 'Médicos',
-      medicos,
-      q: req.query.q || ''
-    });
-  } catch (err) {
-    res.status(500).send('Erro ao listar médicos: ' + err.message);
-  }
-}
-
-export function getCreate(req, res) {
-  res.render('medicos/create', {
-    title: 'Cadastrar Médico',
-    errors: {},
-    form: {},
-    editing: false   
-  });
-}
-
-
-export async function postCreate(req, res) {
-  const form = { ...req.body };
+function validateMedico(form) {
   const errors = {};
 
   if (!form.nome) errors.nome = 'Informe o nome';
   if (!form.crm) errors.crm = 'Informe o CRM';
   if (!form.especialidade) errors.especialidade = 'Informe a especialidade';
 
+  return errors;
+}
+
+export async function getList(req, res) {
+  try {
+    const medicos = await listMedicos({ search: req.query.q });
+    return res.render('medicos/index', {
+      title: 'Médicos',
+      active: 'medicos',
+      medicos,
+      q: req.query.q || '',
+    });
+  } catch (err) {
+    return res.status(500).send('Erro ao listar médicos: ' + err.message);
+  }
+}
+
+export function getCreate(req, res) {
+  return res.render('medicos/create', {
+    title: 'Cadastrar Médico',
+    active: 'medicos',
+    errors: {},
+    form: {},
+    editing: false,
+  });
+}
+
+export async function postCreate(req, res) {
+  const form = { ...req.body };
+  const errors = validateMedico(form);
+
   if (Object.keys(errors).length) {
     return res.status(400).render('medicos/create', {
       title: 'Cadastrar Médico',
+      active: 'medicos',
       errors,
-      form
+      form,
+      editing: false,
     });
   }
 
   try {
     await createMedico(form);
-    res.redirect('/medicos');
+    return res.redirect('/medicos');
   } catch (err) {
     let msg = err.message;
     if (msg.includes('Duplicate') && msg.includes('crm')) msg = 'CRM já cadastrado.';
-    res.status(400).render('medicos/create', {
+
+    return res.status(400).render('medicos/create', {
       title: 'Cadastrar Médico',
+      active: 'medicos',
       errors: { geral: msg },
-      form
+      form,
+      editing: false,
     });
   }
 }
@@ -64,46 +76,46 @@ export async function getEdit(req, res) {
     const medico = await getMedicoById(req.params.id);
     if (!medico) return res.status(404).send('Médico não encontrado');
 
-    res.render('medicos/create', {
+    return res.render('medicos/create', {
       title: 'Editar Médico',
+      active: 'medicos',
       errors: {},
       form: medico,
-      editing: true
+      editing: true,
     });
   } catch (err) {
-    res.status(500).send('Erro ao carregar médico: ' + err.message);
+    return res.status(500).send('Erro ao carregar médico: ' + err.message);
   }
 }
 
 export async function postEdit(req, res) {
   const id = req.params.id;
   const form = { ...req.body, idMedico: id };
-  const errors = {};
-
-  if (!form.nome) errors.nome = 'Informe o nome';
-  if (!form.crm) errors.crm = 'Informe o CRM';
-  if (!form.especialidade) errors.especialidade = 'Informe a especialidade';
+  const errors = validateMedico(form);
 
   if (Object.keys(errors).length) {
     return res.status(400).render('medicos/create', {
       title: 'Editar Médico',
+      active: 'medicos',
       errors,
       form,
-      editing: true
+      editing: true,
     });
   }
 
   try {
     await updateMedico(id, form);
-    res.redirect('/medicos');
+    return res.redirect('/medicos');
   } catch (err) {
     let msg = err.message;
     if (msg.includes('Duplicate') && msg.includes('crm')) msg = 'CRM já cadastrado.';
-    res.status(400).render('medicos/create', {
+
+    return res.status(400).render('medicos/create', {
       title: 'Editar Médico',
+      active: 'medicos',
       errors: { geral: msg },
       form,
-      editing: true
+      editing: true,
     });
   }
 }
@@ -111,8 +123,8 @@ export async function postEdit(req, res) {
 export async function getDelete(req, res) {
   try {
     await deleteMedico(req.params.id);
-    res.redirect('/medicos');
+    return res.redirect('/medicos');
   } catch (err) {
-    res.status(500).send('Erro ao excluir médico: ' + err.message);
+    return res.status(500).send('Erro ao excluir médico: ' + err.message);
   }
 }

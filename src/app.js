@@ -16,12 +16,16 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-
 app.use(
   session({
-    secret: 'algum-segredo-bem-seguro',
+    secret: process.env.SESSION_SECRET || 'troque-este-segredo-em-producao',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    },
   })
 );
 
@@ -29,7 +33,6 @@ app.use((req, res, next) => {
   res.locals.admin = req.session?.admin || null;
   next();
 });
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -40,9 +43,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
 
-// Home
 app.get('/', (req, res) => {
-  res.render('home', { title: 'Clínica - Início' });
+  res.render('home', { title: 'Clínica - Início', active: 'home' });
 });
 
 app.use('/medicos', medicoRouter);
@@ -50,7 +52,6 @@ app.use('/pacientes', pacienteRouter);
 app.use('/consultas', consultaRouter);
 app.use('/admin', adminRouter);
 
-// 404
 app.use((req, res) => {
   res.status(404).render('404', { title: 'Não encontrado' });
 });

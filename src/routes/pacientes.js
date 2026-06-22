@@ -11,7 +11,6 @@ import {
 
 const router = Router();
 
-// todas as rotas de pacientes serão protegidas
 router.use(ensureAdmin);
 
 router.get('/', getList);
