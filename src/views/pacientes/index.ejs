@@ -33,7 +33,7 @@
             <td data-label="Email"><%= p.email || '-' %></td>
             <td class="actions" data-label="Ações">
               <a href="/pacientes/editar/<%= p.idPaciente %>">Editar</a>
-              &nbsp;·&nbsp;
+              &nbsp;|&nbsp;
               <a href="/pacientes/excluir/<%= p.idPaciente %>" onclick="return confirm('Excluir paciente?')">Excluir</a>
             </td>
           </tr>

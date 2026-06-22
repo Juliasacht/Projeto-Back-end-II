@@ -8,7 +8,7 @@
   <form method="post" class="form">
     <div class="form-group">
       <label>Data*</label>
-      <input type="date" name="data" value="<%= form.data ? form.data.toString().substring(0,10) : '' %>" />
+      <input type="date" name="data" value="<%= form.data || '' %>" />
       <% if (errors.data) { %><span class="error"><%= errors.data %></span><% } %>
     </div>
 
@@ -19,17 +19,17 @@
     </div>
 
     <div class="form-group">
-  <label>Status</label>
-  <select name="status">
-    <% const statusOptions = ['Agendada', 'Confirmada', 'Realizada', 'Cancelada', 'Não Compareceu']; %>
+      <label>Status</label>
+      <select name="status">
+        <% const statusOptions = ['Agendada', 'Confirmada', 'Realizada', 'Cancelada', 'Não Compareceu']; %>
 
-    <% statusOptions.forEach(s => { %>
-      <option value="<%= s %>" <%= form.status === s ? 'selected' : '' %> >
-        <%= s %>
-      </option>
-    <% }) %>
-  </select>
-</div>
+        <% statusOptions.forEach(s => { %>
+          <option value="<%= s %>" <%= (form.status || 'Agendada') === s ? 'selected' : '' %>>
+            <%= s %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
 
     <div class="form-group">
       <label>Paciente*</label>

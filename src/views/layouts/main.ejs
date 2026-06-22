@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><%= title || 'Clínica Médica' %></title>
 
-  <!-- Fonte moderna -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
       <div class="brand">
-        <span class="brand-logo">🩺</span>
+        <span class="brand-logo">+</span>
         <div class="brand-text">
           <span class="brand-title">Clínica Médica</span>
           <span class="brand-subtitle">Sistema de Consultas</span>
@@ -22,53 +20,34 @@
       </div>
 
       <button class="nav-toggle" aria-label="Abrir menu" onclick="document.body.classList.toggle('nav-open')">
-        ☰
+        Menu
       </button>
 
       <nav class="nav-links">
-        <!-- Início -->
-        <a href="/"
-           class="<%= (typeof active !== 'undefined' && active === 'home') ? 'active' : '' %>">
+        <a href="/" class="<%= (typeof active !== 'undefined' && active === 'home') ? 'active' : '' %>">
           Início
         </a>
 
-        <!-- Links liberados apenas para admin logado -->
         <% if (admin) { %>
-          <a href="/pacientes"
-             class="<%= (typeof active !== 'undefined' && active === 'pacientes') ? 'active' : '' %>">
+          <a href="/pacientes" class="<%= (typeof active !== 'undefined' && active === 'pacientes') ? 'active' : '' %>">
             Pacientes
           </a>
-          <a href="/medicos"
-             class="<%= (typeof active !== 'undefined' && active === 'medicos') ? 'active' : '' %>">
+          <a href="/medicos" class="<%= (typeof active !== 'undefined' && active === 'medicos') ? 'active' : '' %>">
             Médicos
           </a>
-          <a href="/consultas"
-             class="<%= (typeof active !== 'undefined' && active === 'consultas') ? 'active' : '' %>">
+          <a href="/consultas" class="<%= (typeof active !== 'undefined' && active === 'consultas') ? 'active' : '' %>">
             Consultas
           </a>
         <% } %>
 
-        <!-- Link Admin: se logado vai para dashboard, senão para login -->
-        <% if (admin) { %>
-          <a href="/admin/dashboard"
-             class="<%= (typeof active !== 'undefined' && active === 'admin') ? 'active' : '' %>">
-            Admin
-          </a>
-        <% } %>
-
-        <% if (!admin) { %>
-          <a href="/admin/login"
-             class="<%= (typeof active !== 'undefined' && active === 'admin') ? 'active' : '' %>">
-            Admin
-          </a>
-        <% } %>
+        <a href="<%= admin ? '/admin/dashboard' : '/admin/login' %>"
+           class="<%= (typeof active !== 'undefined' && active === 'admin') ? 'active' : '' %>">
+          Admin
+        </a>
       </nav>
 
-      <!-- Ícone de sair (somente quando logado) -->
       <% if (admin) { %>
-        <a href="/admin/logout" class="logout-icon" title="Sair">
-          🔓 Sair
-        </a>
+        <a href="/admin/logout" class="logout-icon" title="Sair">Sair</a>
       <% } %>
     </div>
   </header>
@@ -79,7 +58,7 @@
 
   <footer class="footer">
     <div class="container">
-      <small>&copy; 2025 - Clínica Médica</small>
+      <small>&copy; 2026 - Clínica Médica</small>
     </div>
   </footer>
 </body>
