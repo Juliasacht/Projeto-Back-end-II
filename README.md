@@ -1,62 +1,69 @@
 # Clínica Médica
 
-Sistema web para gerenciamento de uma clínica médica, desenvolvido com **Node.js**, **Express**, **EJS** e **MySQL**.
+Sistema web para gerenciamento de uma clínica médica, desenvolvido com Node.js, Express, EJS e MySQL.
 
-## Sobre o projeto
+## Sobre o Projeto
 
-Este projeto permite o gerenciamento de pacientes, médicos e consultas em uma clínica médica. O sistema possui uma área administrativa com login, onde é possível cadastrar, listar, editar, buscar e excluir informações.
+Esta aplicação permite que uma clínica organize pacientes, médicos e consultas em uma área administrativa protegida por login. O sistema oferece telas para cadastro, listagem, busca, edição e exclusão dos principais registros da clínica.
 
 ## Funcionalidades
 
-* Login de administrador
-* Cadastro de pacientes
-* Listagem de pacientes
-* Edição e exclusão de pacientes
-* Cadastro de médicos
-* Listagem de médicos
-* Edição e exclusão de médicos
-* Agendamento de consultas
-* Listagem, edição e exclusão de consultas
-* Dashboard administrativo
+- Login de administrador
+- Dashboard com resumo de pacientes, médicos e consultas do dia
+- Cadastro, busca, edição e exclusão de pacientes
+- Cadastro, busca, edição e exclusão de médicos
+- Agendamento, busca, edição e exclusão de consultas
+- Controle de status da consulta
+- Layout responsivo com páginas EJS
+- Configuração de ambiente com `.env`
 
-## Tecnologias utilizadas
+## Tecnologias Utilizadas
 
-* Node.js
-* Express
-* EJS
-* MySQL
-* HTML
-* CSS
-* JavaScript
-* Dotenv
-* Express-session
+- Node.js
+- Express
+- EJS
+- MySQL
+- mysql2
+- express-session
+- dotenv
+- HTML
+- CSS
+- JavaScript
 
-## Como executar o projeto
+## Pré-requisitos
 
-### 1. Clone o repositório
+Antes de iniciar, tenha instalado:
+
+- Node.js
+- npm
+- MySQL
+- Git
+
+## Como Executar o Projeto
+
+Clone o repositório:
 
 ```bash
 git clone https://github.com/Juliasacht/clinica-medica-node-mysql.git
 ```
 
-### 2. Acesse a pasta do projeto
+Acesse a pasta do projeto:
 
 ```bash
 cd clinica-medica-node-mysql
 ```
 
-### 3. Instale as dependências
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-### 4. Configure o arquivo `.env`
-
-Crie um arquivo chamado `.env` na raiz do projeto e configure os dados do banco:
+Crie um arquivo `.env` na raiz do projeto usando o `.env.example` como base:
 
 ```env
 APP_PORT=3000
+SESSION_SECRET=troque-este-segredo-em-producao
 
 DB_HOST=localhost
 DB_PORT=3306
@@ -65,68 +72,109 @@ DB_PASS=sua_senha
 DB_NAME=clinica_db
 ```
 
-Caso seu MySQL não tenha senha, deixe assim:
+Se o seu MySQL não tiver senha, deixe o campo vazio:
 
 ```env
 DB_PASS=
 ```
 
-### 5. Crie o banco de dados
-
-No MySQL Workbench, crie o banco de dados com o nome:
+Crie o banco de dados no MySQL:
 
 ```sql
 CREATE DATABASE clinica_db;
 ```
 
-Depois, crie as tabelas necessárias para o funcionamento do sistema.
+Depois, crie as tabelas necessárias para o sistema:
 
-### 6. Inicie o projeto
+- `Admins`
+- `Pacientes`
+- `Medicos`
+- `Consultas`
 
-```bash
-npm run dev
-```
+## Rodando a Aplicação
 
-Ou:
+Para iniciar em modo normal:
 
 ```bash
 npm start
 ```
 
-Depois acesse no navegador:
+Para iniciar em modo desenvolvimento:
+
+```bash
+npm run dev
+```
+
+Abra no navegador:
 
 ```text
 http://localhost:3000
 ```
 
-## Acesso inicial
+Se a porta no `.env` estiver como `APP_PORT=3001`, acesse:
+
+```text
+http://localhost:3001
+```
+
+## Estrutura do Projeto
+
+```text
+.
+├── app.js
+├── package.json
+├── public/
+│   └── css/
+│       └── styles.css
+└── src/
+    ├── app.js
+    ├── controllers/
+    ├── middlewares/
+    ├── models/
+    ├── routes/
+    └── views/
+```
+
+## Principais Rotas
+
+```text
+/                  Página inicial
+/admin/login       Login do administrador
+/admin/dashboard   Dashboard administrativo
+/pacientes         Gestão de pacientes
+/medicos           Gestão de médicos
+/consultas         Gestão de consultas
+```
+
+## Acesso Administrativo
+
+O login administrativo depende dos dados cadastrados na tabela `Admins` do banco de dados.
+
+Exemplo usado durante o desenvolvimento:
 
 ```text
 Login: admin
 Senha: 123456
 ```
 
-## Estrutura do projeto
+## Observações
 
-```text
-src/
-├── controllers/
-├── models/
-├── routes/
-├── views/
-└── middlewares/
-```
+- O arquivo `.env` não deve ser enviado para o GitHub.
+- A pasta `node_modules` também não deve ser versionada.
+- As dependências devem ser instaladas com `npm install`.
+- Em produção, altere o valor de `SESSION_SECRET` para uma chave segura.
 
-## Melhorias futuras
+## Melhorias Futuras
 
-* Criptografar senha do administrador
-* Melhorar a responsividade das telas
-* Adicionar validações nos formulários
-* Criar mensagens de sucesso e erro
-* Implementar paginação nas listagens
+- Criptografar a senha do administrador
+- Adicionar mensagens de sucesso após cadastros e edições
+- Implementar paginação nas listagens
+- Criar validações mais completas nos formulários
+- Adicionar testes automatizados
+- Melhorar o controle de permissões
 
 ## Autora
 
-Desenvolvido por **Júlia de Souza Sacht**.
+Desenvolvido por Júlia de Souza Sacht.
 
 GitHub: [@Juliasacht](https://github.com/Juliasacht)
