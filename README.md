@@ -157,12 +157,6 @@ Login: admin
 Senha: 123456
 ```
 
-## Observações
-
-- O arquivo `.env` não deve ser enviado para o GitHub.
-- A pasta `node_modules` também não deve ser versionada.
-- As dependências devem ser instaladas com `npm install`.
-- Em produção, altere o valor de `SESSION_SECRET` para uma chave segura.
 
 ## Melhorias Futuras
 
